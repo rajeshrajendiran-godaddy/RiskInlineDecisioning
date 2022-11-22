@@ -1,0 +1,725 @@
+Risk Inline Api details
+
+Endpoint: /risk/acquiring/transactions/{transactionId}/evaluate
+Method: Post
+
+Parameters:
+
+Name
+transactionId *
+string
+(path)
+POYNT-REQUEST-ID *
+string($uuid)
+(header)
+Request body:
+
+Note: all C1 will be in Business and all C2 will be in Transaction
+
+RiskTransactionDecisionRequest{
+business	Business{
+address	Address{...}
+mockProcessor	boolean
+sendWelcomeEmail	boolean
+scrubbed	boolean
+status	stringEnum:
+[ ADDED, ACTIVATED, LOCKED, CLOSED ]
+type	stringEnum:
+[ MERCHANT, TEST_MERCHANT, DEVELOPER, DISTRIBUTOR, ORGANIZATION ]
+activeSince	string($date-time)
+createdAt	string($date-time)
+updatedAt	string($date-time)
+closedAt	string($date-time)
+closingReason	stringEnum:
+[ TERMINATED, CHURNED ]
+echeckProcessor	stringEnum:
+[ MOCK, CHECK_COMMERCE ]
+subscribedBundles	[…]
+stores	[Store{
+address	Address{...}
+fixedLocation	boolean
+mockProcessor	boolean
+echeckProcessor	stringEnum:
+[ MOCK, CHECK_COMMERCE ]
+longitude	number($float)
+latitude	number($float)
+subscribedBundles	[BundledFeatures{…}]
+supportedCardProducts	[CardProduct{
+createdAt	string($date-time)
+installment	Installment{
+createdAt	string($date-time)
+minInstallments*	integer($int32)
+maxInstallments*	integer($int32)
+installmentPlans	[InstallmentPlan{
+createdAt	string($date-time)
+code*	string
+description*	string
+id	string($uuid)
+}]
+id	string($uuid)
+}
+attributes	{
+< * >:	string
+}
+name*	string
+maxLength: 64
+minLength: 3
+id	string($uuid)
+installmentId	string($uuid)
+}]
+governmentIds	[
+maxItems: 10
+minItems: 0
+GovernmentId{}]
+storeDevices	[…]
+storeTerminalIds	[StoreTerminalId{
+}]
+get_id	integer($int64)
+attributes	{
+< * >:	string
+}
+processorData	{
+< * >:	string
+}
+phone	Phone{
+primaryDayTime	boolean
+primaryEvening	boolean
+createdAt	string($date-time)
+updatedAt	string($date-time)
+id	integer($int64)
+status	stringEnum:
+[ ADDED, CONFIRMED ]
+type	stringEnum:
+[ HOME, WORK, BUSINESS, MOBILE, FAX, PAGER, RECEIPT, OTHER ]
+ituCountryCode	string
+areaCode	string
+localPhoneNumber	string
+extensionNumber	string
+}
+acquirer	stringEnum:
+[ ]
+processor	stringEnum:
+[ ]
+status	stringEnum:
+[ ACTIVE, DISABLED, REMOVED ]
+externalStoreId	string
+maxLength: 64
+minLength: 0
+gatewayStoreId	string
+maxLength: 64
+minLength: 0
+displayName	string
+maxLength: 64
+minLength: 0
+currency	string
+maxLength: 3
+minLength: 0
+emailAddress	string
+timezone	string
+maxLength: 64
+minLength: 0
+catalogId	string
+maxLength: 36
+minLength: 0
+processorAdapterId	string
+ventureId	string
+maxLength: 36
+minLength: 0
+channelId	string
+maxLength: 36
+minLength: 0
+channelType	string
+maxLength: 64
+minLength: 0
+id	string($uuid)  description: C1 Store_uuid
+}]
+supportedCardProducts	[string]
+get_id	integer($int64)
+attributes	{
+< * >:	string
+}
+processorData	{
+< * >:	string
+}
+phone	Phone{
+primaryDayTime	boolean
+primaryEvening	boolean
+createdAt	string($date-time)
+updatedAt	string($date-time)
+id	integer($int64)
+status	stringEnum:
+[ ADDED, CONFIRMED ]
+type	stringEnum:
+[ HOME, WORK, BUSINESS, MOBILE, FAX, PAGER, RECEIPT, OTHER ]
+ituCountryCode	string
+areaCode	string
+localPhoneNumber	String  description: C1 phone number
+extensionNumber	string
+}
+acquirer	stringEnum:
+[ CHASE_PAYMENTECH, REDE, EVO, FIRST_DATA, GLOBAL_PAYMENTS, HEARTLAND_PAYMENT_SYSTEM, ELAVON, MERCURY, MONERIS, PAYPAL, ELAVON_MX, STRIPE, TSYS, VANTIV, WORLDPAY, EPX, WEPAY, MASHREQ, AXIS, KARTUKU, NEXI, DANA, MYNT, POYNT, NUVEI, BRIDGEPAY, CONVERGE, MOCK, NA_BANCARD, CREDITCALL, ELAVON_EU, FUSEBOX, SEAMLESS_PAYMENTS, EVERTEC, GHL, RS2, JCN, PRISMA, VANTIV_EXPRESS, EZETAP, LETGO ]
+processor	stringEnum:
+[  ]
+externalMerchantId	string
+legalName	string
+maxLength: 128
+minLength: 0
+businessUrl	string
+maxLength: 1024
+minLength: 0
+emailAddress	String 
+maxLength: 512
+minLength: 0
+description: C1 phone number
+doingBusinessAs	string
+maxLength: 128
+minLength: 0
+description	string
+maxLength: 512
+minLength: 0
+industryType	string
+mcc	string
+maxLength: 16
+minLength: 0
+sic	string
+maxLength: 16
+minLength: 0
+timezone	string
+logoUrl	string
+maxLength: 1024
+minLength: 0
+closingDetails	string
+underwritingLevel	string
+id	string($uuid)
+}
+
+
+
+
+transaction	Transaction{
+shippingAddress	Address{
+Status	stringEnum:
+[ ADDED ]
+Type	stringEnum:
+[ HOME, WORK, BUSINESS, TRANSACTION, OTHER ]
+primary	boolean
+createdAt	string($date-time)
+updatedAt	string($date-time)
+Id	integer($int64)
+line1	string
+maxLength: 128
+minLength: 0
+line2	string
+maxLength: 128
+minLength: 0
+City	string
+maxLength: 64
+minLength: 0
+territory	string
+maxLength: 64
+minLength: 0
+postalCode	string
+maxLength: 16
+minLength: 0
+postalCodeExtension	string
+maxLength: 16
+minLength: 0
+countryCode	string
+maxLength: 3
+minLength: 0
+territoryType	stringEnum:
+[ STATE, PROVINCE, OTHER ]
+}
+signatureRequired	Boolean
+signatureCaptured	Boolean
+pinCaptured	Boolean
+adjusted	Boolean
+amountsAdjusted	Boolean
+authOnly	Boolean
+partiallyApproved	Boolean
+actionVoid	Boolean
+voided	Boolean
+settled	Boolean
+reversalVoid	Boolean
+partialAuthEnabled	Boolean
+emailReceipt	Boolean
+paymentTokenUsed	Boolean
+createdAt	string($date-time)
+updatedAt	string($date-time)
+chargebackStatus	stringEnum:
+[ CREATED, DISPUTED, MERCHANT_WON, MERCHANT_LOST ]
+context	ClientContext{
+businessType	stringEnum:
+[ MERCHANT, TEST_MERCHANT, DEVELOPER, DISTRIBUTOR, ORGANIZATION ]
+transmissionAtLocal	string($date-time)
+employeeUserId	integer($int64)
+storeDeviceId	string
+sourceApp	string
+acquirerId	string
+Mid	string
+Tid	string
+Mcc	string
+storeAddressTerritory	string
+storeAddressCity	string
+storeTimezone	string
+transactionInstruction	stringEnum:
+[ NONE, EXTERNALLY_PROCESSED, ONLINE_AUTH_REQUIRED ]
+Source	stringEnum:
+[ INSTORE, WEB, MOBILE, CALLIN, CATALOG ]
+businessId	string($uuid)
+storeId	string($uuid)
+}
+fundingSource	FundingSource{
+bankAccount	BankAccount{...}
+Debit	boolean
+Tokenize	boolean
+Card	Card{
+encrypted	boolean
+cardAgreement	CardAgreement{
+agreedOn	string($date-time)
+declinedOn	string($date-time)
+createdAt	string($date-time)
+updatedAt	string($date-time)
+version	integer($int64)
+status	string
+email	string
+id	string($uuid)
+businessId	string($uuid)
+cardId	string($uuid)
+} description: C2 customer card details
+cardBrand	CardBrand{
+createdAt	string($date-time)
+scheme*	string
+brand	string
+issuerBank	string
+maxLength: 150
+minLength: 0
+logoUrl	string
+displayName*	string
+maxLength: 50
+minLength: 3
+Id	string($uuid)
+}
+type	stringEnum:
+[ AMERICAN_EXPRESS, EBT, BANCOMAT, DISCOVER, MAESTRO, GOPAY, DINERS_CLUB, JCB, ALIPAY, MASTERCARD, DANKORT, OTHER, PAYPAL, INTERAC, UNIONPAY, VISA ]
+description: C2 card type
+source	stringEnum:
+[ DIRECT, APPLE_PAY, GOOGLE_PAY ]
+status	stringEnum:
+[ ACTIVE, REMOVED ]
+expirationDate	integer($int32)
+expirationMonth	integer($int32)
+expirationYear	integer($int32)
+key	[CardKeyData{
+id*	stringEnum:
+[ WCK, WAEK, WMACK ]
+version*	string
+maxLength: 4
+minLength: 0
+}]
+id	integer($int64)
+number	String
+numberFirst6	String description: C2 card number first 6 digits
+numberLast4	String description: C2 card number last 4 digits
+numberMasked	String
+numberHashed	String description: C2 card number hashed
+cardHolderFirstName	String
+cardHolderLastName	String
+cardHolderFullName	String
+currency	string
+maxLength: 3
+minLength: 3
+track1data	String
+track2data	String
+track3data	String
+keySerialNumber	String
+sequenceNumber	String
+serviceCode	String
+encryptedExpirationDate	String
+issuer	String
+cardId	string($uuid) description: C2 card uuid
+}
+customFundingSource	CustomFundingSource{…}
+debitEBTReEntryDetails	DebitEBTReEntry{…}
+ebtDetails	EBTDetails{
+type*	stringEnum:
+[ CASH_BENEFIT, CASH_BENEFIT_CASH_WITHDRAWAL, FOOD_STAMP, FOOD_STAMP_ELECTRONIC_VOUCHER ]
+electronicVoucherSerialNumber	string
+maxLength: 15
+minLength: 1
+electronicVoucherApprovalCode	string
+maxLength: 6
+minLength: 6
+}
+emvData	EMVData{
+emvTags	{
+< * >:	string
+}
+}
+exchangeRate	ExchangeRate{
+requestedAt	string($date-time)
+rate	integer($int64)
+ratePrecision	integer($int64)
+cardAmount	integer($int64)  description: C2 card amount
+cardTipAmount	integer($int64)
+txnAmount*	integer($int64)
+tipAmount	integer($int64)
+cardCurrency*	string
+maxLength: 3
+minLength: 3
+txnCurrency*	string
+maxLength: 3
+minLength: 3
+provider	string
+markupPercentage	string
+signature	string
+disclaimer	string
+markupInfo1	string
+markupInfo2	string
+businessId	string($uuid)
+}
+accountType	stringEnum:
+[ EBT, CHECKING, SAVINGS ]
+entryDetails	FundingSourceEntryDetails{...}
+Type	stringEnum:
+[ CHEQUE, CUSTOM_FUNDING_SOURCE, CREDIT_DEBIT, CASH ]
+interacMac	string
+interacMacKeySerialNumber	string
+cardToken	string
+paymentToken	string
+nonce	string
+verificationData	VerificationData{
+cardHolderBillingAddress	Address{...} description: C2 customer address details
+cvSkipReason	stringEnum: 
+[ NOT_PRESENT, NOT_AVAILABLE, BYPASSED, ILLEGIBLE ]
+additionalIdType	stringEnum:
+[ DRIVERS_LICENCE, EMAIL, PASSPORT, PHONE, NATIONAL_ID_CARD ]
+cvData	String
+additionalIdRefNumber	String
+pin	String
+keySerialNumber	String
+threeDSecureData	ThreeDSecureData{
+eci	String
+cryptogram	String
+}
+}
+}
+adjustmentHistory	[AdjustmentRecord{
+signatureCaptured	Boolean
+createdAt	string($date-time)
+exchangeRate	ExchangeRate{
+requestedAt	string($date-time)
+rate	integer($int64)
+ratePrecision	integer($int64)
+cardAmount	integer($int64)
+cardTipAmount	integer($int64)
+txnAmount*	integer($int64)
+tipAmount	integer($int64)
+cardCurrency*	string
+maxLength: 3
+minLength: 3
+txnCurrency*	string
+maxLength: 3
+minLength: 3
+provider	String
+markupPercentage	String
+signature	String
+disclaimer	String
+markupInfo1	String
+markupInfo2	String
+businessId	string($uuid)
+}
+sequence	integer($int32)
+processorResponse	ProcessorResponse{
+avsResult	AVSResult{...}
+cvResult	stringEnum:
+[ MATCH, NO_MATCH, NOT_PROCESSED, NO_CODE_PRESENT, SHOULD_HAVE_BEEN_PRESENT, ISSUER_NOT_CERTIFIED, INVALID, NO_RESPONSE, NOT_APPLICABLE ] description: C2 card CV match result
+processedAt	string($date-time)
+echeckProcessor	stringEnum:
+[ MOCK, CHECK_COMMERCE ]
+remainingBalance	integer($int64)
+approvedAmount	integer($int64)
+emvTags	{
+< * >:	String
+}
+processor	stringEnum:
+[ CHASE_PAYMENTECH, REDE, EVO, FIRST_DATA, GLOBAL_PAYMENTS, HEARTLAND_PAYMENT_SYSTEM, ELAVON, MERCURY, MONERIS, PAYPAL, ELAVON_MX, STRIPE, TSYS, VANTIV, WORLDPAY, EPX, WEPAY, MASHREQ, AXIS, KARTUKU, NEXI, DANA, MYNT, POYNT, NUVEI, BRIDGEPAY, CONVERGE, MOCK, NA_BANCARD, CREDITCALL, ELAVON_EU, FUSEBOX, SEAMLESS_PAYMENTS, EVERTEC, GHL, RS2, JCN, PRISMA, VANTIV_EXPRESS, EZETAP, LETGO ]
+acquirer	stringEnum:
+[ CHASE_PAYMENTECH, REDE, EVO, FIRST_DATA, GLOBAL_PAYMENTS, HEARTLAND_PAYMENT_SYSTEM, ELAVON, MERCURY, MONERIS, PAYPAL, ELAVON_MX, STRIPE, TSYS, VANTIV, WORLDPAY, EPX, WEPAY, MASHREQ, AXIS, KARTUKU, NEXI, DANA, MYNT, POYNT, NUVEI, BRIDGEPAY, CONVERGE, MOCK, NA_BANCARD, CREDITCALL, ELAVON_EU, FUSEBOX, SEAMLESS_PAYMENTS, EVERTEC, GHL, RS2, JCN, PRISMA, VANTIV_EXPRESS, EZETAP, LETGO ]
+status	stringEnum:
+[ Successful, Failure ]
+providerVerification	ProviderVerification{...}
+statusCode	string
+maxLength: 64
+minLength: 0
+statusMessage	string
+maxLength: 512
+minLength: 0
+transactionId	string
+maxLength: 64
+minLength: 0
+approvalCode	string
+maxLength: 32
+minLength: 0
+batchId	string
+maxLength: 64
+minLength: 0
+retrievalRefNum	string
+maxLength: 64
+minLength: 0
+cardToken	string
+maxLength: 256
+minLength: 0
+cvActualResult	String
+debitResponseCode	String
+interacMac	String
+pinSessionKey	String
+batchAutoClosedByHost	String
+adapterId	String
+adapterVariant	String
+scaResult	stringEnum:
+[ ENTER_PIN, INSERT_CARD, CDCVM ]
+}
+systemTraceAuditNumber	String
+transactionNumber	String
+amounts	TransactionAmounts{
+customerOptedNoTip	Boolean
+transactionFees	[TransactionFee{
+amount	integer($int64)
+type	String
+}]
+transactionAmount	integer($int64)
+maximum: 2147483647
+orderAmount	integer($int64)
+maximum: 2147483647
+tipAmount	integer($int64)
+maximum: 2147483647
+cashbackAmount	integer($int64)
+maximum: 2147483647
+currency	String
+} description: c2 customer transaction amount details
+amountChanges	TransactionAmounts{
+customerOptedNoTip	Boolean
+transactionFees	[TransactionFee{
+amount	integer($int64)
+type	string
+}]
+transactionAmount	integer($int64)
+maximum: 2147483647
+orderAmount	integer($int64)
+maximum: 2147483647
+tipAmount	integer($int64)
+maximum: 2147483647
+cashbackAmount	integer($int64)
+maximum: 2147483647
+currency	String
+}
+reason	TransactionReason{
+programFor	[stringEnum:
+[ RESTAURANT, GIFT_SHOP, MINI_BAR, TELEPHONE, LAUNDRY, OTHER ]]
+program	stringEnum:
+[ NO_SHOW, PURCHASE, CARD_DEPOSIT, DELAYED_CHARGE, EXPRESS_SERVICE, ASSURED_RESERVATION ]
+}
+signature	[string($byte)]
+}]
+links	[Link{
+Href	String
+Rel	String
+method	String
+}]
+references	[TransactionReference{
+id*	string
+maxLength: 128
+minLength: 0
+customType	string
+maxLength: 32
+minLength: 0
+type*	stringEnum:
+[ POYNT_ORDER, POYNT_STAY, CUSTOM, CHANNEL ]
+}]
+get_id	integer($int64)
+get_parentId	integer($int64)
+get_tcdId	integer($int64)
+customerUserId	integer($int64)
+processorOptions	{
+< * >:	String
+}
+receiptPhone	Phone{
+primaryDayTime	Boolean
+primaryEvening	Boolean
+createdAt	string($date-time)
+updatedAt	string($date-time)
+Id	integer($int64)
+status	stringEnum:
+[ ADDED, CONFIRMED ]
+Type	stringEnum:
+[ HOME, WORK, BUSINESS, MOBILE, FAX, PAGER, RECEIPT, OTHER ]
+ituCountryCode	String
+areaCode	String
+localPhoneNumber	String  description: C2 customer phone number
+extensionNumber	String
+}
+poyntLoyalty	PoyntLoyalty{
+loyalty	[PoyntLoyaltyCampaign{…}]
+reward	[PoyntLoyaltyReward{
+newReward	Boolean
+expireAt	string($date-time)
+businessLoyaltyId	integer($int64)
+rewardId	integer($int64)
+value	integer($int64)
+status	String
+type	String
+rewardDescription	String
+preText	String
+postText	String
+}]
+loyaltyId	integer($int64)
+externalId	String
+}
+processorResponse	ProcessorResponse{
+avsResult	AVSResult{
+addressResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+postalCodeResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+stateResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+countryResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+phoneResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+cardHolderNameResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+cityResult	stringEnum:
+[ MATCH, NO_MATCH, PARTIAL_MATCH, NOT_PROVIDED, ISSUER_NOT_CERTIFIED, NO_RESPONSE_FROM_CARD_ASSOCIATION, UNKNOWN_RESPONSE_FROM_CARD_ASSOCIATION, NOT_VERIFIED, BAD_FORMAT, ERROR, UNSUPPORTED_BY_ISSUER, UNAVAILABLE, ADDRESS_AND_ZIP_MATCH ]
+actualResult	String
+}
+cvResult	stringEnum:
+[ MATCH, NO_MATCH, NOT_PROCESSED, NO_CODE_PRESENT, SHOULD_HAVE_BEEN_PRESENT, ISSUER_NOT_CERTIFIED, INVALID, NO_RESPONSE, NOT_APPLICABLE ]
+processedAt	string($date-time)
+echeckProcessor	stringEnum:
+[ MOCK, CHECK_COMMERCE ]
+remainingBalance	integer($int64)
+approvedAmount	integer($int64)
+emvTags	{
+< * >:	String
+}
+processor	stringEnum:
+[ CHASE_PAYMENTECH, REDE, EVO, FIRST_DATA, GLOBAL_PAYMENTS, HEARTLAND_PAYMENT_SYSTEM, ELAVON, MERCURY, MONERIS, PAYPAL, ELAVON_MX, STRIPE, TSYS, VANTIV, WORLDPAY, EPX, WEPAY, MASHREQ, AXIS, KARTUKU, NEXI, DANA, MYNT, POYNT, NUVEI, BRIDGEPAY, CONVERGE, MOCK, NA_BANCARD, CREDITCALL, ELAVON_EU, FUSEBOX, SEAMLESS_PAYMENTS, EVERTEC, GHL, RS2, JCN, PRISMA, VANTIV_EXPRESS, EZETAP, LETGO ]
+acquirer	stringEnum:
+[ CHASE_PAYMENTECH, REDE, EVO, FIRST_DATA, GLOBAL_PAYMENTS, HEARTLAND_PAYMENT_SYSTEM, ELAVON, MERCURY, MONERIS, PAYPAL, ELAVON_MX, STRIPE, TSYS, VANTIV, WORLDPAY, EPX, WEPAY, MASHREQ, AXIS, KARTUKU, NEXI, DANA, MYNT, POYNT, NUVEI, BRIDGEPAY, CONVERGE, MOCK, NA_BANCARD, CREDITCALL, ELAVON_EU, FUSEBOX, SEAMLESS_PAYMENTS, EVERTEC, GHL, RS2, JCN, PRISMA, VANTIV_EXPRESS, EZETAP, LETGO ]
+status	stringEnum:
+[ Successful, Failure ]
+providerVerification	ProviderVerification{
+signature	String
+publicKeyHash	String
+}
+statusCode	string
+maxLength: 64
+minLength: 0
+statusMessage	string
+maxLength: 512
+minLength: 0
+transactionId	string
+maxLength: 64
+minLength: 0
+approvalCode	string
+maxLength: 32
+minLength: 0
+batchId	string
+maxLength: 64
+minLength: 0
+retrievalRefNum	string
+maxLength: 64
+minLength: 0
+cardToken	string
+maxLength: 256
+minLength: 0
+cvActualResult	String
+debitResponseCode	String
+interacMac	String
+pinSessionKey	String
+batchAutoClosedByHost	String
+adapterId	String
+adapterVariant	String
+scaResult	stringEnum:
+[ ENTER_PIN, INSERT_CARD, CDCVM ]
+}
+stayType	stringEnum:
+[ GENERAL_CONTAINER, REGULAR_STAY, QUICK_STAY, NON_LODGING_SALE, NON_LODGING_NRR ]
+systemTraceAuditNumber	string
+maxLength: 6
+minLength: 1
+transactionNumber	string
+maxLength: 64
+minLength: 0
+receiptEmailAddress	string
+maxLength: 512
+minLength: 0
+description: C2 customer email address
+notes	string
+maxLength: 512
+minLength: 0
+approvalCode	string
+maxLength: 32
+minLength: 0
+customerLanguage	string
+maxLength: 2
+minLength: 2
+processorTransactionId	string
+maxLength: 64
+minLength: 0
+action*	stringEnum:
+Array [ 7 ]
+amounts	TransactionAmounts{
+customerOptedNoTip	Boolean
+transactionFees	[TransactionFee{
+Amount	integer($int64)
+Type	string
+}]
+transactionAmount	integer($int64)
+maximum: 2147483647
+orderAmount	integer($int64)
+maximum: 2147483647
+tipAmount	integer($int64)
+maximum: 2147483647
+cashbackAmount	integer($int64)
+maximum: 2147483647
+currency	String
+}
+reason	TransactionReason{
+programFor	[...]
+program	stringEnum:
+[ NO_SHOW, PURCHASE, CARD_DEPOSIT, DELAYED_CHARGE, EXPRESS_SERVICE, ASSURED_RESERVATION ]
+}
+status	stringEnum:
+[ CREATED, SAVED, AUTHORIZED, PARTIALLY_CAPTURED, CAPTURED, DECLINED, PARTIALLY_CAPTURED_AND_PARTIALLY_REFUNDED, PARTIALLY_REFUNDED, REFUNDED, VOIDED, STEP_UP ]
+id	string($uuid) description: transaction uuid
+parentId	string($uuid)
+signature	[string($byte)]
+}
+riskContext	RiskContext{
+ipAddress	string
+intent	string
+}
+}
+
+
+RiskTransactionDecisionResponse{
+txnUuid	string
+riskScore	integer($int64)
+decision	stringEnum:
+[ APPROVED, DECLINED, STEPUP ]
+riskReviewStatus	stringEnum:
+[ INREVIEW, NOREVIEW ]
+riskReason	RiskReason{
+riskCode	string
+riskMessage	string
+}
+riskStepUp	RiskStepUp{
+type	string
+mandate	string
+data	stringEnum:
+[ EMAIL, PHONE ]
+}
+}
